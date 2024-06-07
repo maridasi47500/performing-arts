@@ -1,1 +1,0 @@
-  <%="," if paspremier else ""%>{"src":"<%="https://images.google.com" if "http" not in image["src"] else ""%><%=image["src"]%>"}

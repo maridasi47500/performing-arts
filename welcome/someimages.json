@@ -1,4 +1,0 @@
-{"q":"<%=q%>","images":[
-	<%=render_collection(collection=params['images'], partial='welcome/_image.json', as_='image')%>
-
-]}
