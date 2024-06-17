@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 class Chercherimage():
     def __init__(self,q):
        self.someparams={"q":q,"tbm":"isch"}
+       print(q,"q")
     def search(self):
        html = requests.get("https://www.google.com/search", params=self.someparams)
        soup = BeautifulSoup(html.text, 'html.parser')
@@ -12,7 +13,8 @@ class Chercherimage():
        wow=[]
        ye={}
        for k in malist:
-           ye=dict(k)
+           ye={}
+           ye["src"]=k["src"]
            ye["q"]=self.someparams["q"]
            wow.append(ye)
        return wow

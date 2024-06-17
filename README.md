@@ -6,6 +6,11 @@
 - lancer
 
 ```
+$ python3 cherchermusic.py
+```
+- lancer
+
+```
 $ python3 addinstrument.py
 ```
 - lancer (optionnel):
