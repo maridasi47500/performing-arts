@@ -7,6 +7,7 @@ import traceback
 import sys
 import datetime
 from datetime import date
+import random
 class RenderFigure():
     def __init__(self,program):
         self.session={"name":"","notice":"","mysession":False}
@@ -37,7 +38,7 @@ class RenderFigure():
     def render_body(self):
         try:
           mystr=""
-          loc={"json":json,"notice":self.session["notice"],"db":Mydb(),"session": self.session,"render_collection": self.render_collection,"params":self.params,"getparams": self.getparams,"Fichier":Fichier,"date":date,"datetime":datetime}
+          loc={"json":json,"notice":self.session["notice"],"db":Mydb(),"session": self.session,"random":random,"render_collection": self.render_collection,"params":self.params,"getparams": self.getparams,"Fichier":Fichier,"date":date,"datetime":datetime}
           for n in self.params:
               loc[n]=self.params[n]
           for j in self.body.split("<%"):

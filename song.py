@@ -17,6 +17,22 @@ class Song(Model):
     , MyTimestamp DATETIME DEFAULT CURRENT_TIMESTAMP                );""")
         self.con.commit()
         #self.con.close()
+    def track_list_some_songs(self):
+        self.cur.execute("select * from song where lower(artist) like '%presley%'")
+        malist=[]
+
+        row=self.cur.fetchall()
+        for x in row:
+            malist.append({
+            "id": x["id"],
+            "name": x["title"],
+            "artist": x["artist"],
+            "image": (x["image"] or "https://source.unsplash.com/Qrspubmx6kE/640x360"),
+            "path": "/uploads/"+x["filename"]
+            })
+
+        #xx=select("songs.*").where("lower(songs.title) not like '%barbie%' and (select count(idontlikes.id) from idontlikes where idontlikes.song_id = songs.id) = 0").to_a.shuffle.map do |x|
+        return malist
     def track_list(self):
         self.cur.execute("select * from song")
         malist=[]

@@ -74,6 +74,10 @@ class Route():
         return self.render_figure.render_redirect()
     def newperformance(self,search):
         return self.render_figure.render_figure("welcome/newperformance.html")
+    def jeux(self,search):
+        return self.render_figure.render_figure("welcome/jeux.html")
+    def heros(self,search):
+        return self.render_figure.render_figure("welcome/heros.html")
     def meet(self,search):
         return self.render_figure.render_figure("welcome/meet.html")
     def myperformance(self,search):
@@ -516,6 +520,7 @@ class Route():
             path=path.split("?")[0]
             print("link route ",path)
             ROUTES={
+            "^/jeux$":self.jeux,
             "^/meet$":self.meet,
             "^/heros$":self.heros,
             "^/mycentering/([0-9]+)$":self.mycentering,

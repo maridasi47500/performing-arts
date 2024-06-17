@@ -51,21 +51,46 @@
 	height: 100%;
 }
 #map { height: 180px;width:540px; }
-.united1 {
-	    background: #00d1ff73;
-	        border: 4px purple;
-		    border-style: solid dashed dotted double;
-		        margin: 0 30px 0 30px;
-		        padding: 10px;
-		}
-.united2 {
-	    margin: 30px 30px 0 30px;
-	        border: 5px solid black;
-		    padding: 10px;
+.somealbumpic1 {
+	  position: relative;
+	    text-align: center;
+	      color: white;
+	      width:200px;
+	      height:200px;
+      }
+
+      /* Bottom left text */
+      .bottom-left {
+	        position: absolute;
+		  bottom: 8px;
+		    left: 16px;
 	    }
-.united3 {
-	    background: #da9a2382;
-	        border: 7px dotted white;
-		    margin: 30px 30px 0 30px;
-		        padding: 10px;
-		}
+
+	    /* Top left text */
+	    .top-left {
+		      position: absolute;
+		        top: 8px;
+			  left: 16px;
+		  }
+
+		  /* Top right text */
+		  .top-right {
+			    position: absolute;
+			      top: 8px;
+			        right: 16px;
+			}
+
+			/* Bottom right text */
+			.bottom-right {
+				  position: absolute;
+				    bottom: 8px;
+				      right: 16px;
+			      }
+
+			      /* Centered text */
+			      .centered {
+				        position: absolute;
+					  top: 50%;
+					    left: 50%;
+					      transform: translate(-50%, -50%);
+				      }

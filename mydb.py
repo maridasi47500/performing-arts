@@ -4,6 +4,7 @@ from post import Post
 from musicalinstrument import Musicalinstrument
 from song import Song
 from centering import Centering
+from chercherimage import Chercherimage
 class Mydb():
   def __init__(self):
     print("hello")
@@ -13,3 +14,4 @@ class Mydb():
     self.Song=Song()
     self.Post=Post()
     self.Centering=Centering()
+    self.Chercherimage=Chercherimage
