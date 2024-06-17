@@ -1,7 +1,9 @@
-- poster des chose /chanson en route 
+- performing arts
 
-* gps pour la localisation
--lancer
+* performing arts :performing_arts:
+- :slot_machine:
+- add centerings, rencontrer musician,deviner c ki (music),ecouter music
+- lancer
 
 ```
 $ python3 addinstrument.py
@@ -15,5 +17,3 @@ $ python3 addcountry.py
 $ sh mysite.sh
 ```
 - visit http://localhost:8080
-# gps-musician
-# gps-musician

@@ -1,6 +1,6 @@
  <!DOCTYPE html><html>
         <head>
-        <title>mysterious unknown traveller</title>
+        <title>performing arts</title>
 <meta charset="UTF-8">
 
 
@@ -18,6 +18,7 @@
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/application.css">
+    <link rel="stylesheet" href="/css/myplayer.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -31,6 +32,24 @@
 	<%=Fichier("./mypage","connexion.html").lire() if session["user_id"] == "" else Fichier("./mypage","deconnexion.html").lire() %>
         <li class="nav-item">
           <a class="nav-link" href="/aboutme">ABout me</a>
+        </li>
+        <li class="nav-item">
+	         <a class="nav-link" href="/jeux"> &#127920; gagner jeux</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/ecoutermusic">ecouter music &#127905;</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/cki">c ki ?  &#127917;</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/myperformance">my performance &#127919;</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/heros">ki sont mé héro</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/meet">rencontrer musician</a>
         </li>
       </ul>
     </div>
@@ -50,6 +69,7 @@
 
   <script src="/js/post.js"></script>
   <script src="/js/main.js"></script>
+  <script src="/js/myplayer.js"></script>
 
         </body>
         </html>

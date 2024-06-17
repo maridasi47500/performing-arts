@@ -15,8 +15,9 @@ setTimeout(function () {
 }, 0);
 }
 
+
+if ((window.location.pathname === "/signup" || window.location.pathname === "/ajouter1chanson") && latuser.innerHTML === "" && lonuser.innerHTML === "" && myuserid.innerHTML !== "") {
 if (navigator.geolocation) {
-if ((window.location.pathname === "/poster1msg" || window.location.pathname === "/ajouter1chanson") && latuser.innerHTML === "" && lonuser.innerHTML === "" && myuserid.innerHTML !== "") {
   navigator.geolocation.getCurrentPosition(function(position) {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;

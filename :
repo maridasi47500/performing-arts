@@ -1,100 +1,87 @@
-#!/usr/bin/env python3
-"""
-License: MIT License
-Copyright (c) 2023 Miel Donkers
+<div class="row row-cols-1 row-cols-md-2 g-4">
 
-Very simple HTTP server in python for logging requests
-Usage::
-    ./server.py [<port>]
-"""
-from http.server import BaseHTTPRequestHandler, HTTPServer
-import logging
-from route import Route
-from urllib import parse
-from urllib.parse import parse_qs, urlparse
-import requests
-req = requests.Session()
-req.cookies["email"]=None
-req.cookies["name"]=None
-req.cookies["notice"]=None
-from urllib.parse import urlencode
+	<%=render_collection(collection=db.Centering.getallbyuserid(session["user_id"]), partial='welcome/_centering.html', as_='post') if session["user_id"] is not None or session["user_id"] != "" else "vous n'tees pas connecte"%>
+
+</div>
+Identify your key muscles
+These are the muscles that are most critical for you to have control
+over, but are also the muscles most likely to tighten up under pressure.
+…......................................................................................................
+…......................................................................................................
+.........................................................................................................
+Practice questions
+What is the aim of your overall practice session?
+…......................................................................................................
+What is your intention for the phrase you are about to play? In other
+words, what is the mood or character? How do the dynamics,
+articulation, tone, phrasing, tempo, etc. contribute to this? Write down
+your ideas, hear it in your head exactly like you'd like it to sound, then
+give it a shot.  (Don Juan) Energetic, but light - like it’s the easiest thing in the world
+…......................................................................................................
+…......................................................................................................
+Did it sound exactly like you wanted it to? In what ways was it close?
+In what ways was it different? 
+…......................................................................................................
+…......................................................................................................
+Are you going to try it again? If so, what are you going to try differently
+this time? What will you try to do exactly the same?
+…......................................................................................................
+….....................................................................................................
+Close your eyes and think back to your top 2 or 3 performances ever.
+See if you can recall how you sounded, and particularly how you felt
+(kinesthetically, not emotionally per se) when performing in that
+incredible state of “flow” where everything just clicks.
+Write down some of the important details of what you recall.
+…......................................................................................................
+…......................................................................................................
+…......................................................................................................
+…......................................................................................................
+…......................................................................................................
+If this is difficult, think about lessons, rehearsals, or even in practice
+room settings, how do your key muscles and body feel when you are
+playing exactly as you wish?
+Rehearse this feeling inside your mind/body without actually making
+these motions on your instrument. How does it feel? Can you picture it
+and feel it clearly? Does it feel real?
+Cue words
+This step is optional. Some prefer to avoid using words in this process
+as they find that it triggers left-brain analysis and thoughts of
+technique, but others find a cue word helpful as a reminder or
+“anchor” to facilitate recall of these kinesthetic and auditory elements.
+Words such as balance, heavy arm, light touch, feathery, oily, flowing
+air, etc.
+Experiment with a few until you identify some words or short phrases
+that “trigger” that very vivid recollection of what it feels like to
+generate the sounds that you hear in your mind. Write them down
+here so you don't forget.
+…......................................................................................................
+…......................................................................................................
+…......................................................................................................
+…......................................................................................................
+…......................................................................................................
+…......................................................................................................
+…......................................................................................................
+…......................................................................................................
+…......................................................................................................
+…......................................................................................................
+Notes: Felt tight in my shoulders...felt a bit of hesitation before playing...am I taking too much time before I start playing?
 
 
 
 
-class S(BaseHTTPRequestHandler):
-    def _set_response(self,redirect=False,cookies=False):
-        if redirect:
-          self.send_response(301)
-          self.send_header('Status', '301 Redirect')
-          self.send_header('Location', redirect)
-          self.send_header('Content-type', 'text/html;charset=utf-8')
-        else:
-          self.send_response(200)
-          self.send_header('Content-type', 'text/html')
-        if cookies:
-          self.send_header("Cookie", urlencode(cookies))
-        self.end_headers()
 
-    def do_GET(self):
-        logging.info("GET request,\nPath: %s\nHeaders:\n%s\n", str(self.path), str(self.headers))
-        myparams = parse_qs(urlparse(self.path).query)
-
-        myProgram=Route().run(path=str(self.path),params=myparams,session=req.cookies,url=self.path)
-        if myProgram.get_session():
-          xx=myProgram.get_session()["email"]
-          yy=myProgram.get_session()["name"]
-          zz=myProgram.get_session()["notice"]
-          print("1 cookie email",xx)
-          req.cookies["email"]=xx
-          req.cookies["notice"]=zz
-
-          req.cookies["name"]=yy
-        print("cookies dict", dict(req.cookies))
-
-        self._set_response(redirect=myProgram.get_redirect(),cookies=req.cookies)
-        if zz is not None and len(zz) > 0:
-          req.cookies["notice"]=""
-        self.wfile.write(myProgram.get_html().encode('utf-8'))
-
-    def do_POST(self):
-        content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
-        post_data = self.rfile.read(content_length) # <--- Gets the data itself
-        logging.info("POST request,\nPath: %s\nHeaders:\n%s\n\nBody:\n%s\n",
-                str(self.path), str(self.headers), post_data.decode('utf-8'))
-        myparams=(parse.parse_qs(post_data.decode('utf-8')))
-
-        logging.info(parse.parse_qs(post_data.decode('utf-8')))
-        myProgram=Route().run(path=str(self.path),params=myparams,session=req.cookies,url=self.path)
-        if myProgram.get_session():
-          xx=myProgram.get_session()["email"]
-          zz=myProgram.get_session()["notice"]
-          yy=myProgram.get_session()["name"]
-          print("1 cookie email",xx)
-          req.cookies["email"]=xx
-          req.cookies["name"]=yy
-          req.cookies["notice"]=zz
-        print("cookies", req.cookies)
-
-        self._set_response(redirect=myProgram.get_redirect(),cookies=req.cookies)
-        self.wfile.write(myProgram.get_html().encode('utf-8'))
-
-def run(server_class=HTTPServer, handler_class=S, port=8080):
-    logging.basicConfig(level=logging.INFO)
-    server_address = ('', port)
-    httpd = server_class(server_address, handler_class)
-    logging.info('Starting httpd...\n')
-    try:
-        httpd.serve_forever()
-    except KeyboardInterrupt:
-        pass
-    httpd.server_close()
-    logging.info('Stopping httpd...\n')
-
-if __name__ == '__main__':
-    from sys import argv
-
-    if len(argv) == 2:
-        run(port=int(argv[1]))
-    else:
-        run()
+<hr>
+1 Focal Point 
+ ...............................................................
+ 2 Clear Intention
+  ...............................................................
+   ............................................................... 
+    ...............................................................
+    3 Breathe Mindfully
+    4 Release Muscle Tension
+    5 Find Your Center
+    6 Process Cue
+     ...............................................................
+     7 Direct Energy
+     * Elapsed Time
+      ..............................................................

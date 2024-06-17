@@ -65,7 +65,7 @@ longitude text,
         return row
     def getbyid(self,myid):
         try:
-           self.cur.execute("select user.*, m.name as instrumentdemusique,m.unicode as iconmusic from user left join musicalinstrument m on m.id = user.instrument_id where user.id = ? ",(myid,))
+           self.cur.execute("select user.*, m.name as instrumentdemusique,m.unicode as iconmusic, country.name as pays from user left join country on country.id = user.countr_id left join musicalinstrument m on m.id = user.instrument_id where user.id = ? ",(myid,))
            row=dict(self.cur.fetchone())
            print(row["id"], "row id")
            job=self.cur.fetchall()
@@ -94,7 +94,7 @@ longitude text,
         try:
             if params["password"] == params["passwordconfirmation"]:
                  del myhash["passwordconfirmation"]
-                 self.cur.execute("insert into user (instrument_id,job,sex,username,email,country_id,phone,password) values (:instrument_id,:job,:sex,:username,:email,:country_id,:phone,:password)",myhash)
+                 self.cur.execute("insert into user (lat,lon,instrument_id,job,sex,username,email,country_id,phone,password) values (:lat,:lon,:instrument_id,:job,:sex,:username,:email,:country_id,:phone,:password)",myhash)
                  self.con.commit()
                  myid=self.cur.lastrowid
 

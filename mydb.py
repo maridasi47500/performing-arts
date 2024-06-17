@@ -3,6 +3,7 @@ from user import User
 from post import Post
 from musicalinstrument import Musicalinstrument
 from song import Song
+from centering import Centering
 class Mydb():
   def __init__(self):
     print("hello")
@@ -11,3 +12,4 @@ class Mydb():
     self.User=User()
     self.Song=Song()
     self.Post=Post()
+    self.Centering=Centering()

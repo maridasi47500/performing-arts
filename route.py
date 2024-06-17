@@ -13,7 +13,7 @@ from lignecommande import Lignecommande
 class Route():
     def __init__(self):
         self.dbUsers=User()
-        self.Program=Directory("mysterious unknown traveler")
+        self.Program=Directory("performing arts")
         self.Program.set_path("./")
         self.mysession={"notice":None,"email":None,"name":None}
         self.render_figure=RenderFigure(self.Program)
@@ -72,6 +72,16 @@ class Route():
         self.set_redirect("/sign_in")
 
         return self.render_figure.render_redirect()
+    def newperformance(self,search):
+        return self.render_figure.render_figure("welcome/newperformance.html")
+    def meet(self,search):
+        return self.render_figure.render_figure("welcome/meet.html")
+    def myperformance(self,search):
+        return self.render_figure.render_figure("welcome/myperformance.html")
+    def cki(self,search):
+        return self.render_figure.render_figure("welcome/cki.html")
+    def ecoutermusic(self,search):
+        return self.render_figure.render_figure("welcome/ecoutermusic.html")
     def voir(self,search):
         self.render_figure.set_param("lat",search["lat"][0])
         self.render_figure.set_param("lon",search["lon"][0])
@@ -138,15 +148,15 @@ class Route():
           self.set_notice("erreur quand vous avez envoyé le formulaire")
         self.render_figure.set_param("post_id",myparam["id"])
         return self.render_some_json("welcome/mypost.json")
-    def createpost(self,search):
-        myparam=self.get_post_data()(params=("band_id","user_id","title","content",))
-        hi=self.db.Post.create(myparam)
+    def createcentering(self,search):
+        myparam=self.get_post_data()(params=("focalpoint","muscles","aim","piece","intention","soundlike","tryagain","notes","cue","rating","elapsedtime","user_id",))
+        hi=self.db.Centering.create(myparam)
         if hi:
-          self.set_notice("votre post a été ajouté")
+          self.set_notice("votre centering a été ajouté")
         else:
-          self.set_notice("erreur quand vous avez envoyé le formulaire")
-        self.render_figure.set_param("post_id",hi["post_id"])
-        return self.render_some_json("welcome/mypost.json")
+          self.set_notice("erreur quand vous avez envoyé votre centering")
+        self.render_figure.set_param("centering_id",hi["centering_id"])
+        return self.render_some_json("welcome/mycentering.json")
     def createband(self,search):
         myparam=self.get_post_data()(params=("name",))
         hi=self.db.Band.create(myparam)
@@ -252,9 +262,6 @@ class Route():
     def ajouter1chanson(self,search):
         print("for employee action")
         return self.render_figure.render_figure("welcome/chanson.html")
-    def poster1msg(self,search):
-        print("for employee action")
-        return self.render_figure.render_figure("welcome/message.html")
     def hello(self,search):
         print("hello action")
         print("hello action")
@@ -321,12 +328,12 @@ class Route():
         self.render_figure.set_param("membre",monmembre)
         self.render_figure.set_param("membre_id",monmembre["member_id"])
         return self.render_figure.render_figure("ajouter/jobs.html")
-    def ajouterphoto(self,params={}):
+    def mycentering(self,params={}):
         getparams=("id",)
         print("get param, action see my new",getparams)
         myparam=self.get_this_route_param(getparams,params)
-        self.render_figure.set_param("membre",self.db.Userfamily.getbyid(myparam["id"]))
-        return self.render_figure.render_figure("ajouter/photos.html")
+        self.render_figure.set_param("centering",self.db.Centering.getbyid(myparam["id"]))
+        return self.render_figure.render_figure("welcome/voircentering.html")
     def voirpersonne(self,params={}):
         getparams=("id",)
         print("get param, action see my new",getparams)
@@ -509,13 +516,18 @@ class Route():
             path=path.split("?")[0]
             print("link route ",path)
             ROUTES={
+            "^/meet$":self.meet,
+            "^/heros$":self.heros,
+            "^/mycentering/([0-9]+)$":self.mycentering,
+            '^/createcentering$': self.createcentering,
+            '^/newperformance$': self.newperformance,
+            '^/myperformance$': self.myperformance,
+            '^/cki$': self.cki,
+            '^/ecoutermusic$': self.ecoutermusic,
             '^/voir$': self.voir,
-            '^/poster1msg$': self.poster1msg,
             '^/ajouter1chanson$': self.ajouter1chanson,
-
             '^/somepost$': self.somepost,
             '^/somesong$': self.somesong,
-
             '^/aboutme$': self.aboutme,
             '^/sign_in$': self.signin,
             '^/sign_up$': self.signup,
@@ -523,7 +535,7 @@ class Route():
             '^/signup$':self.save_user,
             '^/save_user$':self.save_user,
             '^/update_user$':self.update_user,
-            "^/ajouterphoto/([0-9]+)$":self.ajouterphoto,
+
             "^/seeuser/([0-9]+)$":self.seeuser,
             "^/edituser/([0-9]+)$":self.edit_user,
             "^/deleteuser/([0-9]+)$":self.delete_user,
