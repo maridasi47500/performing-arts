@@ -1,0 +1,6 @@
+<div>
+	<label for="option<%=index%>">
+		<%=composer["nom"]%>
+	</label>
+	<input onchange="<%="this.checked ? alert('ok') : console.log('no');" if bon["id"] == composer["id"] else ""%>" id="option<%=index%>" type="radio" name="composer" value="<%=composer["id"]%>"/>
+</div>

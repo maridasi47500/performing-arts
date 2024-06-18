@@ -1,7 +1,9 @@
 <h2>cki</h2>
-<audio></audio>
+<%malist=db.Sing.fetchtwo()%>
+<audio controls src="/uploads<%=malist["bon"]["filename"]%>"></audio>
 
 <p>cki</p>
+<%=render_collection(collection=malist['list'], partial='welcome/_malist.html', as_='composer',mylocals={"bon":malist["bon"]})%>
 <div>
 <label for="option1">
 	numero 1

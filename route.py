@@ -2,6 +2,7 @@ from directory import Directory
 from render_figure import RenderFigure
 from user import User
 from mydb import Mydb
+from mymusic import Music
 from mypic import Pic
 from javascript import Js
 from stylesheet import Css
