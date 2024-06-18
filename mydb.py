@@ -6,6 +6,7 @@ from song import Song
 from centering import Centering
 from chercherimage import Chercherimage
 from sing import Sing
+from hero import Hero
 class Mydb():
   def __init__(self):
     print("hello")
@@ -17,3 +18,4 @@ class Mydb():
     self.Centering=Centering()
     self.Chercherimage=Chercherimage
     self.Sing=Sing()
+    self.Hero=Hero()

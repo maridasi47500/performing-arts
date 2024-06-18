@@ -94,3 +94,13 @@
 					    left: 50%;
 					      transform: translate(-50%, -50%);
 				      }
+				      .performingmsg{
+					      font-size:40px;
+				      }
+				      .somealbumpics {
+					          display: flex;
+						      flex-direction: row;
+						          flex-wrap: wrap;
+							      justify-content: space-between;
+							          align-content: center;
+							  }

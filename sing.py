@@ -20,14 +20,14 @@ class Sing(Model):
         self.con.commit()
         #self.con.close()
     def fetchone(self):
-        self.cur.execute("select *,  SUBSTR(title,1, INSTR(title, '/')-1) as nom from song where lower(artist) not like '%presley%' order by random() limit 1")
+        self.cur.execute("select *,  SUBSTR(title,1, INSTR(title, '-')-1) as nom1,  SUBSTR(title,1, INSTR(title, ':')-1) as nom2,  SUBSTR(title,1, INSTR(title, '/')-1) as nom from song where lower(artist) not like '%presley%' order by random() limit 1")
         malist=[]
 
         row=self.cur.fetchone()
         return row
     def fetchtwo(self):
         x=self.fetchone()
-        self.cur.execute("select *,SUBSTR(title,1, INSTR(title, '/')-1) as nom from song where lower(artist) not like '%presley%' and id != ? order by random() limit 2",(x["id"],))
+        self.cur.execute("select *,SUBSTR(title,1, INSTR(title, '-')-1) as nom1,  SUBSTR(title,1, INSTR(title, ':')-1) as nom2,SUBSTR(title,1, INSTR(title, '/')-1) as nom from song where lower(artist) not like '%presley%' and id != ? order by random() limit 2",(x["id"],))
         row=self.cur.fetchall()
         print(row)
         malist=list(row)

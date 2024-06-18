@@ -1,5 +1,7 @@
 <h2>s'inscrire</h2>
 <form method="post" action="/save_user">
+									    <input id="membre_lat" type="hidden" name="lat" />
+									    <input id="membre_lon" type="hidden" name="lon" />
 <table>
 <tr>
 <td class="field ">
@@ -92,32 +94,8 @@
 </form>
 <div id="overlay">
 <div id="text">
-	<p> you provide Page Id and Access Token. Please follow below steps to get the access token and page Id.
-	 <br>
-
-	</p><p> Go to the Graph API Explorer
-	 <br>
-	</p><p> 2.Choose your app from the dropdown menu
-	 <br>
-
-	</p><p> 3.Click "Get Access Token"
-	 <br>
-
-	</p><p> 4.Choose the manage_pages permission (you may need the user_events permission too, not sure)
-
-	 <br>
-
-	</p><p> 5.Now access the me/accounts connection and copy your page's access_token
-	 <br>
-
-	</p><p> 6.Click on your page's id
-	 <br>
-
-	</p><p> 7.Add the page's access_token to the GET fields
-	 <br>
-
-	</p><p> 8.Call the connection you want (e.g.: PAGE_ID/events)
-	</p>
+	<p>kel est votre localisation svp?</p>
+	<div id="map"></div>
 	<button type="button" onclick="overlay.style.display='none';">fermer</button>
 
 </div>

@@ -27,7 +27,7 @@ class Song(Model):
             "id": x["id"],
             "name": x["title"],
             "artist": x["artist"],
-            "image": (x["image"] or "https://source.unsplash.com/Qrspubmx6kE/640x360"),
+            "image": ("/uploads/"+x["image"] or "https://source.unsplash.com/Qrspubmx6kE/640x360"),
             "path": "/uploads/"+x["filename"]
             })
 
@@ -43,7 +43,7 @@ class Song(Model):
             "id": x["id"],
             "name": x["title"],
             "artist": x["artist"],
-            "image": (x["image"] or "https://source.unsplash.com/Qrspubmx6kE/640x360"),
+            "image": ("/uploads/"+x["image"] or "https://source.unsplash.com/Qrspubmx6kE/640x360"),
             "path": "/uploads/"+x["filename"]
             })
 

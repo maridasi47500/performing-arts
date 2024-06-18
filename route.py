@@ -1,5 +1,6 @@
 from directory import Directory
 from render_figure import RenderFigure
+from geolocation import Geolocation
 from user import User
 from mydb import Mydb
 from mymusic import Music
@@ -80,6 +81,13 @@ class Route():
     def heros(self,search):
         return self.render_figure.render_figure("welcome/heros.html")
     def meet(self,search):
+        user=self.db.User.getbyid(self.Program.get_session()["user_id"])
+        if user:
+          hey=Geolocation("bar",500).geolocate(user["lat"],user["lon"])[0]
+        else:
+            hey={"lat":"","lon":""}
+        print("azeryt ",dict(hey))
+        self.render_figure.set_param("lieu",hey)
         return self.render_figure.render_figure("welcome/meet.html")
     def myperformance(self,search):
         return self.render_figure.render_figure("welcome/myperformance.html")
@@ -162,111 +170,20 @@ class Route():
           self.set_notice("erreur quand vous avez envoyé votre centering")
         self.render_figure.set_param("centering_id",hi["centering_id"])
         return self.render_some_json("welcome/mycentering.json")
-    def createband(self,search):
-        myparam=self.get_post_data()(params=("name",))
-        hi=self.db.Band.create(myparam)
+    def createhero(self,search):
+        myparam=self.get_post_data()(params=("nom","pic","type","sex","user_id",))
+        hi=self.db.Hero.create(myparam)
         if hi:
-          self.set_notice("votre band a été ajouté")
+          self.set_notice("votre hero été ajouté")
         else:
           self.set_notice("erreur quand vous avez envoyé le formulaire")
-        return self.render_some_json("welcome/mypic.json")
-    def createaddress(self,search):
-        myparam=self.get_post_data()(params=("user_id","name","email",))
-        hi=self.db.Address.create(myparam)
-        if hi:
-          self.set_notice("votre address a été ajouté")
-        else:
-          self.set_notice("erreur quand vous avez envoyé le formulaire")
-        return self.render_some_json("welcome/address.json")
-    def sendemail(self,search):
-        myparam=self.get_post_data()(params=("sent","from","to","object","content","envoyeremail"))
-        hi=self.db.Message.create(myparam)
-        if hi and hi["sent"] == "1":
-          self.set_notice("votre email a été envoyé")
-        elif hi:
-          self.set_notice("votre email a mis dans les brouillons")
-        else:
-          self.set_notice("erreur quand vous avez envoyé le formulaire")
-        return self.render_some_json("welcome/mypic.json")
-    def new1(self,search):
-        myparam=self.get_post_data()(params=("script","missiontarget_id","missiontype_id","missionprogram_id",))
-        #hi=self.dbMissionscript.create(myparam)
-        return self.render_some_json("welcome/mypic.json")
-    def nouveauevent(self,search):
-        myparam=self.get_post_data()(params=("date","heure","organization_id","place_id", "subtitle","recording","privpubl"))
-        self.render_figure.set_param("redirect","/")
-        x=None
-        x="hey"
-        if x:
-          self.set_notice("votre évènement a été ajouté")
-        else:
-          self.set_code422(True)
-          self.set_notice("erreur quand votre évènement a été ajouté")
+        self.render_figure.set_param("redirect","/heros")
         return self.render_some_json("welcome/redirect.json")
-    def nouveaulieu(self,search):
-        myparam=self.get_post_data()(params=("pic","name",))
-        self.render_figure.set_param("redirect","/")
-        x=""
-        if x:
-          self.set_notice("votre lieu a été ajouté")
-        else:
-          self.set_code422(True)
-        return self.render_some_json("welcome/redirect.json")
-    def nouveauhack(self,search):
-        myparam=self.get_post_data()(params=("person_id","place_id","text",))
-        self.render_figure.set_param("redirect","/")
-        x=""
-        if x:
-          self.set_notice("votre hack a été ajouté")
-        else:
-          self.set_code422(True)
-        return self.render_some_json("welcome/redirect.json")
-    def nouvelenregistrement(self,search):
-        myparam=self.get_post_data()(params=("event_id","language","recording",))
-        self.render_figure.set_param("redirect","/")
-        x=""
-        if x:
-          self.set_notice("votre enregistrement a été ajoutée")
-        else:
-          self.set_code422(True)
-        return self.render_some_json("welcome/redirect.json")
-    def nouvellerumeur(self,search):
-        myparam=self.get_post_data()(params=("person_id","place_id","text",))
-        self.render_figure.set_param("redirect","/")
-        x=""
-        if x:
-          self.set_notice("votre rumeur a été ajoutée")
-        else:
-          self.set_code422(True)
-        return self.render_some_json("welcome/redirect.json")
-    def nouvellepersonne(self,search):
-        myparam=self.get_post_data()(params=("name","pic",))
-        self.render_figure.set_param("redirect","/")
-        x=""
-        if x:
-          self.set_notice("votre personne a été ajoutée")
-        else:
-          self.set_code422(True)
-        return self.render_some_json("welcome/redirect.json")
-    def enregistrer(self,search):
-        print("hello action")
-        self.render_figure.set_param("enregistrer",True)
-        return self.render_figure.render_figure("welcome/radio.html")
     def aboutme(self,search):
         print("hello action")
         print("hello action")
         print("hello action")
         return self.render_figure.render_figure("welcome/aboutme.html")
-    def downloadpost(self,search):
-        print("hello action")
-        hi=self.db.Post.download()
-        self.set_notice(hi["notice"])
-        print("hello action")
-        self.render_figure.set_param("url","/whatismyip")
-        return self.render_some_json("welcome/myurl.json")
-    def ajouter1chanson(self,search):
-        print("for employee action")
-        return self.render_figure.render_figure("welcome/chanson.html")
     def hello(self,search):
         print("hello action")
         print("hello action")
@@ -444,7 +361,7 @@ class Route():
         return self.render_figure.render_figure("ajouter/notebook.html")
 
     def save_user(self,params={}):
-        myparam=self.get_post_data()(params=("instrument_id","sex","username","email","country_id","phone","password","passwordconfirmation","job"))
+        myparam=self.get_post_data()(params=("lat","lon","instrument_id","sex","username","email","country_id","phone","password","passwordconfirmation","job"))
         self.user=self.dbUsers.create(myparam)
         if self.user["user_id"]:
             print("user user1")
@@ -499,6 +416,9 @@ class Route():
         elif path and path.endswith("mp3"):
             self.Program=Music(path)
             self.Program.set_path("./")
+        elif path and path.endswith("images"):
+            self.Program=Pic(path)
+            self.Program.set_path("./")
         elif path and path.endswith("jpeg"):
             self.Program=Pic(path)
             self.Program.set_path("./")
@@ -525,13 +445,13 @@ class Route():
             "^/meet$":self.meet,
             "^/heros$":self.heros,
             "^/mycentering/([0-9]+)$":self.mycentering,
+            '^/createhero$': self.createhero,
             '^/createcentering$': self.createcentering,
             '^/newperformance$': self.newperformance,
             '^/myperformance$': self.myperformance,
             '^/cki$': self.cki,
             '^/ecoutermusic$': self.ecoutermusic,
             '^/voir$': self.voir,
-            '^/ajouter1chanson$': self.ajouter1chanson,
             '^/somepost$': self.somepost,
             '^/somesong$': self.somesong,
             '^/aboutme$': self.aboutme,

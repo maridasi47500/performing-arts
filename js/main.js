@@ -1,8 +1,16 @@
 
 
-if (window.location.pathname === "/voir") {
-    const latitude = member_lat.value;
-    const longitude = member_lon.value;
+if (window.location.pathname === "/meet" && somelat.innerHTML !== "") {
+somebtnpost.onclick=function(){
+	overlay.style.display="block";
+    const latitude = somelat.innerHTML;
+    const longitude = somelon.innerHTML;
+	if (musicianf.checked){
+		$(".unetelle").html("une telle")
+	}else{
+		$(".unetelle").html("un tel")
+	}
+		$(".unetelle").append(" qui vient aussi de "+$(".pays1").html())
     console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
 
 var map = L.map('map').setView([latitude, longitude], 13);
@@ -13,19 +21,24 @@ L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
 setTimeout(function () {
     map.invalidateSize();
 }, 0);
+	return false;
+}
+}else if(window.location.pathname === "/meet" && somelat.innerHTML === ""){
+	window.location="/";
 }
 
 
-if ((window.location.pathname === "/signup" || window.location.pathname === "/ajouter1chanson") && latuser.innerHTML === "" && lonuser.innerHTML === "" && myuserid.innerHTML !== "") {
+if ((window.location.pathname === "/sign_up") && latuser.innerHTML === "" && lonuser.innerHTML === "" && myuserid.innerHTML == "") {
 if (navigator.geolocation) {
+	overlay.style.display="block";
   navigator.geolocation.getCurrentPosition(function(position) {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
     console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
 
 var map = L.map('map').setView([latitude, longitude], 13);
-member_lat.value=latitude;
-member_lon.value=longitude;
+membre_lat.value=latitude;
+membre_lon.value=longitude;
 L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -36,11 +49,11 @@ setTimeout(function () {
 	  map.on('mouseup', function(e) {
     const latitude = e.latlng.lat;
     const longitude = e.latlng.lng;
-member_lat.value=latitude;
-member_lon.value=longitude;
+membre_lat.value=latitude;
+membre_lon.value=longitude;
 var popup = L.popup()
     .setLatLng([parseFloat(latitude), parseFloat(longitude)])
-    .setContent("cette personne est ici")
+    .setContent("vous etes ici")
     .openOn(map);
 	  });
   });
